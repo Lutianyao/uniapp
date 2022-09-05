@@ -1,9 +1,17 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
+	<view>
+		<u-swiper
+            :list="list"
+			indicator
+			indicatorMode="dot"
+    	>
+		</u-swiper>
+		<button class="order" @click="OrderBtn">
+			开始预约
+		</button>
+		<button class="process" @click="ProcessBtn">
+			预约流程
+		</button>
 	</view>
 </template>
 
@@ -11,7 +19,12 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				list:[
+					'/static/images/order-images/show-1.jpg',
+					'/static/images/order-images/show-2.jpg',
+					'/static/images/order-images/show-3.jpg',
+				]
+
 			}
 		},
 		onLoad() {
@@ -24,26 +37,35 @@
 </script>
 
 <style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
+page{
+  background-color: rgb(247,247,247);
+}
+swiper{
+  width: 100%;
+  height: 400rpx !important;
+  margin-bottom: 50rpx;
+}
+swiper image{
+  width:100%;
+  height: 400rpx !important;
+}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
+/* 开始预约 */
+.order{
+  width: 200px;
+  height: 50px;
+  background-color: #0173DE;
+  color: #fff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
 
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+/* 预约流程 */
+.process{
+  width: 200px;
+  height: 50px;
+  background-color: #0173DE;
+  color: #fff;
+}
 </style>

@@ -1,16 +1,42 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "家居售后"
+			}
+		},
+		{
+			"path": "pages/user/base/index",
+			"style": {
+				"navigationBarTitleText": "我的"
 			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "家居售后",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"selectedColor": "#1296DB",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "/static/images/icons/order.png",
+				"selectedIconPath": "/static/images/icons/select_order.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/user/base/index",
+				"text": "我的",
+				"iconPath": "/static/images/icons/my.png",
+				"selectedIconPath": "/static/images/icons/select_my.png"
+			}
+		]
 	}
 }

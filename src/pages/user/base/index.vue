@@ -1,0 +1,198 @@
+<template>
+    <view class="container">
+        <block>
+            <!-- 有封面图 -->
+            <view class="userinfo" v-if="LoginUser.cover_cdn"
+                :style="{ background: 'url(' + LoginUser.cover_cdn + ')' }">
+                <!-- 在微信平台出现 -->
+                <!-- #ifdef MP-WEIXIN -->
+                <!-- 头像 -->
+                <view class="userinfo-avatar">
+                    <open-data type="userAvatarUrl"></open-data>
+                </view>
+
+                <!-- 昵称 -->
+                <view class="nickname-carid">
+                    <view v-if="LoginUser.nickname" class="userinfo-nickname">
+                        {{ LoginUser.nickname }}
+                    </view>
+                    <open-data v-else class="userinfo-nickname" type="userNickName"></open-data>
+                </view>
+
+                <view class="userinfo-carid" v-if="!LoginUser">
+                    <u-button type="success" @click="AuthLogin">授权登录</u-button>
+                </view>
+                <!-- #endif -->
+
+                <!-- 在H5 || app => 应用软件 -->
+                <!-- #ifdef H5 || APP-PLUS -->
+                <view class="avatar">
+                    <u-image width="100%" height="200px" src="/static/images/logo.png"></u-image>
+                </view>
+
+                <view class="nickname-carid">
+                    <text class="userinfo-nickname" v-if="LoginUser.nickname">
+                        {{ LoginUser.nickname }}
+                    </text>
+                    <text class="userinfo-nickname" v-else>临时用户</text>
+                </view>
+
+                <view class="userinfo-carid" v-if="!LoginUser">
+                    <u-button type="success" shape="circle">用户登录</u-button>
+                </view>
+                <!-- #endif -->
+
+            </view>
+
+            <!-- 没有封面图 -->
+            <view v-else class="userinfo">
+                <!-- #ifdef MP-WEIXIN -->
+                <!-- 头像 -->
+                <view class="avatar">
+                    <open-data type="userAvatarUrl"></open-data>
+                </view>
+
+                <!-- 昵称 -->
+                <view class="nickname-carid">
+                    <view class="userinfo-nickname" v-if="LoginUser.nickname">
+                        {{ LoginUser.nickname }}
+                    </view>
+                    <open-data v-else class="userinfo-nickname" type="userNickName">
+                    </open-data>
+                </view>
+
+                <view class="userinfo-carid" v-if="!LoginUser">
+                    <u-button type="success" @click="AuthLogin">授权登录</u-button>
+                </view>
+                <!-- #endif -->
+
+                <!-- #ifdef H5 || APP-PLUS -->
+                <view class="avatar">
+                    <u-image width="100%" height="200px" src="/static/images/logo.png">
+                    </u-image>
+                </view>
+
+                <view class="nickname-carid">
+                    <text class="userinfo-nickname" v-if="LoginUser.nickname">
+                        {{ LoginUser.nickname }}
+                    </text>
+                    <text class="userinfo-nickname">临时用户</text>
+                </view>
+
+                <view class="userinfo-carid" v-if="!LoginUser">
+                    <u-button type="success" shape="circle">用户登录</u-button>
+                </view>
+                <!-- #endif -->
+            </view>
+
+
+        </block>
+    </view>
+</template>
+<script>
+export default {
+    onShow() {
+        let LoginUser = uni.getStorageSync('LoginUser')
+
+        this.LoginUser = LoginUser
+
+    },
+    data() {
+        return {
+            LoginUser: null
+        }
+    },
+}
+</script>
+<style>
+page {
+    background-color: rgb(247, 247, 247);
+}
+
+.login {
+    margin-top: 500rpx;
+    background-color: #0173DE;
+    width: 400rpx;
+    color: white;
+    opacity: 0.7;
+}
+
+.button-hover {
+    color: white;
+    opacity: 1;
+    background-color: #0173DE;
+}
+
+.login {
+    margin: 400rpx;
+}
+
+.userinfo {
+    width: 100%;
+    height: 400rpx;
+    padding: 40rpx 0rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(rgb(1, 115, 222), rgb(78, 169, 245));
+    color: white;
+}
+
+.userinfo-avatar {
+    width: 200rpx;
+    height: 200rpx;
+    border-radius: 50%;
+}
+
+.nickname-carid,
+.userinfo-carid {
+    font-size: 36rpx;
+    margin: 10rpx 0;
+}
+
+.userinfo-carid {
+    padding-bottom: 5rpx;
+    font-size: 26rpx;
+}
+
+.usermotto {
+    width: 100%;
+
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.profile-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: auto;
+    padding: 20rpx 50rpx;
+    border-bottom: 20rpx solid rgb(234, 234, 234);
+    font-size: 26rpx;
+    box-shadow: 0 0 10px #DDD;
+}
+
+.profile-items image {
+    height: 36rpx;
+    width: 36rpx;
+}
+
+
+.auth {
+    width: 300rpx;
+    background-color: #4ea9f5;
+    border-radius: 20rpx;
+    margin-top: 20rpx;
+    color: #fff;
+}
+</style>
