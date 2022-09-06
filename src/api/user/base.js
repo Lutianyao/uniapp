@@ -7,6 +7,10 @@ export default {
       url: 'user/auth/bind',
       method: 'POST'
     },
+    register: {
+      url: 'user/auth/register',
+      method: 'POST'
+    },
     profile: {
       url: 'user/auth/profile',
       method: 'UPLOAD'

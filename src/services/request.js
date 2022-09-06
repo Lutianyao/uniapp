@@ -12,7 +12,7 @@ module.exports = (vm) => {
 
 		// 如果为小程序模式，需配置完整域名路径 (下面的注释是条件编译不要删除)!!!!
 		// #ifdef MP-WEIXIN || APP-PLUS
-		config.baseURL = 'http://www.k2217.com/api';
+		config.baseURL = 'http://www.lty.com/api';
 		// #endif
 
 		//请求头

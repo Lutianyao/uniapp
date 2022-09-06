@@ -84,9 +84,8 @@
                 </view>
                 <!-- #endif -->
             </view>
-
-
         </block>
+        <u-toast ref="uToast"></u-toast>
     </view>
 </template>
 <script>
@@ -102,6 +101,39 @@ export default {
             LoginUser: null
         }
     },
+    methods: {
+        AuthLogin() {
+            uni.login({
+                provider: 'weixin',
+                success: async (res) => {
+                    let code = res.code
+
+                    let result = await this.$u.api.user.login({ code: code })
+
+                    if (result.code === 0) {
+                        this.$refs.uToast.show({
+                            type: 'default',
+                            message: result.msg,
+                            duration: 1400
+                        })
+
+                        if (result.url) {
+                            setTimeout(() => {
+                                this.$u.route({
+                                    url: 'pages/user/bind/bind'
+                                })
+                            }, 1500);
+                        }
+                    }
+                    this.$refs.uToast.show({
+                        type: 'default',
+                        message: result.msg,
+                        duration: 1400
+                    })
+                }
+            })
+        }
+    }
 }
 </script>
 <style>

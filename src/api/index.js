@@ -5,7 +5,6 @@ const files = require.context('./',true,/index.js$/)
 const modules = {}
 
 files.keys().forEach(key => {
-    // console.log(key)
     if(key === './index.js')
     {
         return
@@ -20,9 +19,6 @@ files.keys().forEach(key => {
 
     // 定义对象的属性
     mod[name] = item
-
-    // $u.api.user.login
-    // console.log(mod)
 
     // 合并对象
     Object.assign(modules, mod)
@@ -45,8 +41,6 @@ const install = (Vue, vm) => {
 		{
 			let config = modules[ModeName][ApiName]
 			config.name = ApiName
-	
-            console.log(config)
 			if(!config.name || !config.url)
 			{
 				continue
