@@ -20,6 +20,24 @@
 			"style": {
 				"navigationBarTitleText": "绑定账号"
 			}
+		},
+		{
+			"path": "pages/user/profile/profile",
+			"style": {
+				"navigationBarTitleText": "修改信息"
+			}
+		},
+		{
+			"path": "pages/user/address/index",
+			"style": {
+				"navigationBarTitleText": "收货地址"
+			}
+		},
+		{
+			"path": "pages/user/address/add",
+			"style": {
+				"navigationBarTitleText": "新增收货地址"
+			}
 		}
 	],
 	"globalStyle": {

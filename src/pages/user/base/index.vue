@@ -2,8 +2,8 @@
     <view class="container">
         <block>
             <!-- 有封面图 -->
-            <view class="userinfo" v-if="LoginUser.cover_cdn"
-                :style="{ background: 'url(' + LoginUser.cover_cdn + ')' }">
+            <view class="userinfo" v-if="LoginUser.cover"
+                :style="{ background: 'url(' + LoginUser.cover + ')' }">
                 <!-- 在微信平台出现 -->
                 <!-- #ifdef MP-WEIXIN -->
                 <!-- 头像 -->
@@ -48,7 +48,7 @@
             <view v-else class="userinfo">
                 <!-- #ifdef MP-WEIXIN -->
                 <!-- 头像 -->
-                <view class="avatar">
+                <view class="userinfo-avatar">
                     <open-data type="userAvatarUrl"></open-data>
                 </view>
 
@@ -84,6 +84,33 @@
                 </view>
                 <!-- #endif -->
             </view>
+            <view class="usermotto">
+                <view class="profile-items" @click="onProfile">
+                    <text>修改信息</text>
+                    <image src='/static/images/icons/row.png'></image>
+                </view>
+                <view class="profile-items" @click="onMyOrder">
+                    <text>我的预约</text>
+                    <image src='/static/images/icons/row.png'></image>
+                </view>
+                <view class="profile-items" @click="onAddress">
+                    <text>我的收货地址</text>
+                    <image src='/static/images/icons/row.png'></image>
+                </view>
+                <view class="profile-items" @click="onQuery">
+                    <text>维修进度</text>
+                    <image src='/static/images/icons/row.png'></image>
+                </view>
+                <view class="profile-items" @click="onRecord">
+                    <text>消费记录</text>
+                    <image src='/static/images/icons/row.png'></image>
+                </view>
+                <view class="profile-items" @click="calling">
+                    <!--<image src='/static/images/icons/call.png'></image>-->
+                    <text>联系我们</text>
+                    <image src='/static/images/icons/row.png'></image>
+                </view>
+            </view>
         </block>
         <u-toast ref="uToast"></u-toast>
     </view>
@@ -107,9 +134,7 @@ export default {
                 provider: 'weixin',
                 success: async (res) => {
                     let code = res.code
-
                     let result = await this.$u.api.user.login({ code: code })
-
                     if (result.code === 0) {
                         this.$refs.uToast.show({
                             type: 'default',
@@ -124,13 +149,30 @@ export default {
                                 })
                             }, 1500);
                         }
-                    }
-                    this.$refs.uToast.show({
+                        return false
+                    }else{
+                        this.$refs.uToast.show({
                         type: 'default',
                         message: result.msg,
                         duration: 1400
                     })
+                    uni.setStorageSync('LoginUser',result.data)
+                        this.LoginUser = result.data
+                        return false
+                    }
+                    
                 }
+            })
+        },
+        onProfile()
+        {
+            this.$u.route({
+                url:'pages/user/profile/profile'
+            })
+        },
+        onAddress(){
+            this.$u.route({
+                url:'pages/user/address/index'
             })
         }
     }
@@ -161,7 +203,7 @@ page {
 
 .userinfo {
     width: 100%;
-    height: 400rpx;
+    height: 350rpx;
     padding: 40rpx 0rpx;
     display: flex;
     flex-direction: column;
@@ -174,10 +216,10 @@ page {
     width: 200rpx;
     height: 200rpx;
     border-radius: 50%;
+    overflow: hidden;
 }
 
-.nickname-carid,
-.userinfo-carid {
+.nickname-carid {
     font-size: 36rpx;
     margin: 10rpx 0;
 }
@@ -189,7 +231,6 @@ page {
 
 .usermotto {
     width: 100%;
-
 }
 
 .container {

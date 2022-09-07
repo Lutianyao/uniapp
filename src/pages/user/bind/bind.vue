@@ -19,8 +19,9 @@
         <!-- 顶部提示 -->
         <u-notify ref="uNotify"></u-notify>
         <!-- 弹出确认框 -->
+        <!-- show=>是否显示 content=>显示的内容 confirm=>点击确认 cancel=>点击取消 asyncClose=>是否异步确认 showCancelButton=>显示取消 closeOnClickOverlay=>点击遮罩关闭 -->
         <u-modal :show="show" :content="content" @confirm="confirm" @cancel="cancel" :asyncClose="true" showCancelButton
-            ref="uModal">
+            :closeOnClickOverlay="true" ref="uModal">
         </u-modal>
         <!-- 轻提示 -->
         <u-toast ref="uToast"></u-toast>
@@ -143,32 +144,32 @@ export default {
     },
 }
 </script>
-    <style>
-    .user {
-        width: 100%;
-        height: 450rpx;
-        background: linear-gradient(rgb(1, 115, 222), rgb(78, 169, 245));
-        padding-top: 40rpx;
-    }
-    
-    .user-imge {
-        width: 200rpx;
-        height: 200rpx;
-        background-color: greenyellow;
-        border-radius: 50%;
-        margin: 0 auto;
-        overflow: hidden;
-    }
-    
-    .user-imge image {
-        width: 100%;
-        height: 100%;
-    }
-    
-    .user text {
-        margin-top: 50rpx;
-        display: block;
-        text-align: center;
-        color: #fff;
-    }
-    </style>
+<style>
+.user {
+    width: 100%;
+    height: 450rpx;
+    background: linear-gradient(rgb(1, 115, 222), rgb(78, 169, 245));
+    padding-top: 40rpx;
+}
+
+.user-imge {
+    width: 200rpx;
+    height: 200rpx;
+    background-color: greenyellow;
+    border-radius: 50%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.user-imge image {
+    width: 100%;
+    height: 100%;
+}
+
+.user text {
+    margin-top: 50rpx;
+    display: block;
+    text-align: center;
+    color: #fff;
+}
+</style>
