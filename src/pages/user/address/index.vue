@@ -20,7 +20,7 @@
                             </span>
                             <span>编辑</span>
                         </view>
-                        <view class="del">
+                        <view class="del" @click="onDel(item.id)">
                             <span>
                                 <image src="/static/images/icons/del.png"></image>
                             </span>
@@ -34,6 +34,10 @@
         </u-empty>
         <!-- 底部添加地址 -->
         <u-button type="primary" @click="add" :custom-style="addressBtn" text="新增地址"></u-button>
+        <u-modal :show="show" :content="content" @confirm="confirm" @cancel="cancel" :asyncClose="true" showCancelButton
+            ref="uModal">
+        </u-modal>
+        <u-toast ref="notice"></u-toast>
     </view>
 </template>
 <script>
@@ -56,7 +60,10 @@ export default {
                 backgroundColor: '#4ea9f5',
                 borderRadius: '0px',
                 color: '#fff',
-            }
+            },
+            show: false,
+            content: '',
+            addressid: null
         }
     },
     methods: {
@@ -87,6 +94,43 @@ export default {
         add() {
             this.$u.route({
                 url: 'pages/user/address/add'
+            })
+        },
+        // 删除收货地址
+        onDel(value) {
+            this.show = true;
+            this.content = '确定删除该地址？';
+            this.addressid = value
+            return false
+        },
+        // 确认删除收货地址
+        async confirm() {
+            let result = await this.$u.api.user.AddressDel({ addressid: this.addressid })
+            if (result.code === 1) {
+                if (result.code === 1) {
+                    this.AddressData()
+                    this.$refs.notice.show({
+                        type: 'default',
+                        message: result.msg,
+                        duration: 1400
+                    })
+                }
+            } else {
+                this.$refs.notice.show({
+                    type: 'default',
+                    message: result.msg,
+                    duration: 1400
+                })
+            }
+            this.show = false;
+        },
+        // 取消
+        cancel() {
+            this.show = false;
+        },
+        onEdit(value) {
+            this.$u.route('pages/user/address/edit', {
+                addressid: value
             })
         }
     },

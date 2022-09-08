@@ -38,6 +38,12 @@
 			"style": {
 				"navigationBarTitleText": "新增收货地址"
 			}
+		},
+		{
+			"path": "pages/user/address/edit",
+			"style": {
+				"navigationBarTitleText": "编辑收货地址"
+			}
 		}
 	],
 	"globalStyle": {

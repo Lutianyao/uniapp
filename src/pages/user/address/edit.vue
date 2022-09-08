@@ -34,7 +34,7 @@
             </u-form-item>
         </u--form>
 
-        <u-button type="primary" @click="add" :custom-style="addressBtn" text="添加地址"></u-button>
+        <u-button type="primary" @click="save" :custom-style="addressBtn" text="保存修改"></u-button>
         <u-toast ref="notice"></u-toast>
     </view>
 </template>
@@ -45,22 +45,24 @@ export default {
     components: {
         pickRegions
     },
+    onLoad(options) {
+        // 获取其他页面带来的参数
+        this.addressid = options.addressid
+        this.Address()
+    },
     onShow() {
         // 获取cookie
         let LoginUser = uni.getStorageSync('LoginUser')
-        // 给表单的属性赋值
-        this.form.consignee = LoginUser.nickname ? LoginUser.nickname : ''
-        this.form.region = LoginUser.region ? LoginUser.region : []
-        this.form.region_text = LoginUser.region_text ? LoginUser.region_text : ''
-
-        this.RegionCode = LoginUser.district
         // 将cookie数据赋值给LoginUser
         this.LoginUser = LoginUser
-        // 调用规则
+        // 调用表单规则
         this.$refs.form.setRules(this.rules)
+        this.RegionCode = this.form.district,
+        this.Region = this.form.region
     },
     data() {
         return {
+            // 表单规则
             rules: {
                 consignee: [{
                     required: true,
@@ -100,6 +102,7 @@ export default {
                     }
                 ],
             },
+            // 按钮样式
             addressBtn: {
                 top: '3em',
                 width: '100%',
@@ -107,6 +110,7 @@ export default {
                 borderRadius: '0px',
                 color: '#fff',
             },
+            // 表单属性
             form: {
                 consignee: '',
                 mobile: '',
@@ -119,6 +123,7 @@ export default {
             LoginUser: {},
             checkboxValue1: [],
             status: 0,
+            addressid: null,
         }
     },
     methods: {
@@ -145,13 +150,13 @@ export default {
                 region_code = district.code
                 region.push(district.name)
             }
-
+            // 显示的地区
             this.form.region_text = region_text
-
+            // 区域码
             this.RegionCode = region_code
-
+            // 打开后选中的区域
             this.form.region = region
-
+            // 关闭
             this.RegionShow = false
         },
         // 是否设置为默认收货地址
@@ -162,20 +167,21 @@ export default {
                 this.status = 0
             }
         },
-        add() {
+        save() {
             this.$refs.form.validate().then(async res => {
                 let data = {
-                    userid: this.LoginUser.id,
+                    addressid:this.form.id,
+                    userid: this.form.userid,
                     consignee: this.form.consignee,
                     mobile: this.form.mobile,
                     address: this.form.address,
                     status: this.status,
                     code: this.RegionCode
                 }
-                let result =await this.$u.api.user.AddressAdd(data)
+                let result = await this.$u.api.user.AddressEdit(data)
                 if (result.code === 1) {
                     this.$refs.notice.show({
-                        type: 'default',
+                        type: 'success',
                         message: result.msg,
                         duration: 1400
                     })
@@ -196,6 +202,11 @@ export default {
             }).catch(error => {
 
             })
+        },
+        async Address(){
+            let result = await this.$u.api.user.AddressInfo({addressid:this.addressid})
+            this.form=result.data
+            // console.log(this.form);
         }
     }
 }

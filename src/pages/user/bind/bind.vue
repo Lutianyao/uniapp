@@ -19,8 +19,8 @@
         <!-- 顶部提示 -->
         <u-notify ref="uNotify"></u-notify>
         <!-- 弹出确认框 -->
-        <!-- show=>是否显示 content=>显示的内容 confirm=>点击确认 cancel=>点击取消 asyncClose=>是否异步确认 showCancelButton=>显示取消 closeOnClickOverlay=>点击遮罩关闭 -->
-        <u-modal :show="show" :content="content" @confirm="confirm" @cancel="cancel" :asyncClose="true" showCancelButton
+        <!-- show=>是否显示 content=>显示的内容 confirm=>点击确认 cancel=>点击取消 showCancelButton=>显示取消 closeOnClickOverlay=>点击遮罩关闭 -->
+        <u-modal :show="show" :content="content" @confirm="confirm" @cancel="cancel" showCancelButton
             :closeOnClickOverlay="true" ref="uModal">
         </u-modal>
         <!-- 轻提示 -->
@@ -126,7 +126,6 @@ export default {
                                 url: 'pages/user/base/index'
                             })
                         }, 1500);
-                        return false
                     } else {
                         this.$refs.uToast.show({
                             type: 'default',
