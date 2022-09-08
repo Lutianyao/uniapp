@@ -175,7 +175,7 @@ export default {
                 let result =await this.$u.api.user.AddressAdd(data)
                 if (result.code === 1) {
                     this.$refs.notice.show({
-                        type: 'default',
+                        type: 'success',
                         message: result.msg,
                         duration: 1400
                     })

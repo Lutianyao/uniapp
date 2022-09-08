@@ -44,6 +44,12 @@
 			"style": {
 				"navigationBarTitleText": "编辑收货地址"
 			}
+		},
+		{
+			"path": "pages/process/process",
+			"style": {
+				"navigationBarTitleText": "预约流程"
+			}
 		}
 	],
 	"globalStyle": {

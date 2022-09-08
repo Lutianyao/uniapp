@@ -17,6 +17,8 @@ require('services/request.js')(app)
 
 //引入接口
 import api from '@/api/index.js'
-
 Vue.use(api, app)
+// 引入登录验证
+import auth from '@/services/auth.js'
+Vue.use(auth,app)
 app.$mount()

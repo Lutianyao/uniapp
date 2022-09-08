@@ -73,7 +73,6 @@
         </u-picker>
         <!-- 消息提示的组件 -->
         <u-toast ref="notice"></u-toast>
-        <u-toast ref="uToast"></u-toast>
     </view>
 </template>
 <script>
@@ -84,6 +83,7 @@ export default {
         pickRegions
     },
     onReady() {
+        this.$u.auth.check()
         let LoginUser = uni.getStorageSync('LoginUser');
         this.LoginUser = LoginUser;
         if (LoginUser.cover) {
