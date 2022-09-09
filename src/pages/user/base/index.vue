@@ -159,8 +159,7 @@ export default {
                     uni.setStorageSync('LoginUser',result.data)
                         this.LoginUser = result.data
                         return false
-                    }
-                    
+                    }  
                 }
             })
         },

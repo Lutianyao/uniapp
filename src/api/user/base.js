@@ -14,5 +14,9 @@ export default {
     profile: {
       url: 'user/auth/profile',
       method: 'UPLOAD'
+    },
+    check: {
+      url: 'user/base/check',
+      method: 'POST'
     }
 }

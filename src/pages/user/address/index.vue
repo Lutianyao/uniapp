@@ -93,7 +93,7 @@ export default {
         // 新增地址
         add() {
             this.$u.route({
-                url: 'pages/user/address/add'
+                url: 'pages/user/address/add',
             })
         },
         // 删除收货地址

@@ -188,7 +188,8 @@ export default {
                     // 关闭后跳转
                     setTimeout(() => {
                         this.$u.route({
-                            url: 'pages/user/address/index'
+                            url: 'pages/user/address/index',
+                            type: 'reLaunch'
                         })
                     }, 1500);
                     return false
@@ -205,8 +206,22 @@ export default {
         },
         async Address(){
             let result = await this.$u.api.user.AddressInfo({addressid:this.addressid})
+            if (result.code === 0) {
+                this.$refs.notice.show({
+                    type: 'error',
+                    message: result.msg,
+                    duration: 1400
+                })
+                setTimeout(() => {
+                    this.$u.route({
+                        url:'pages/user/address/index',
+                    })
+                }, 1500);
+                return false
+            }
             this.form=result.data
-            // console.log(this.form);
+            this.checkboxValue1.push(result.data.status),
+            this.status=result.data.status
         }
     }
 }
