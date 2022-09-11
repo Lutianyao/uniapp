@@ -2,7 +2,7 @@
 	<view>
 		<u-swiper :list="list" indicator indicatorMode="dot">
 		</u-swiper>
-		<button class="order" @click="OrderBtn">
+		<button class="order" @click="ProjectBtn">
 			开始预约
 		</button>
 		<button class="process" @click="ProcessBtn">
@@ -27,6 +27,11 @@ export default {
 		this.Home()
 	},
 	methods: {
+		ProjectBtn(){
+			this.$u.route({
+				url: 'pages/project/project'
+			})
+		},
 		ProcessBtn() {
 			this.$u.route({
 				url: 'pages/process/process'

@@ -50,6 +50,18 @@
 			"style": {
 				"navigationBarTitleText": "预约流程"
 			}
+		},
+		{
+			"path": "pages/project/project",
+			"style": {
+				"navigationBarTitleText": "预约服务"
+			}
+		},
+		{
+			"path": "pages/project/order/index",
+			"style": {
+				"navigationBarTitleText": "预约订单"
+			}
 		}
 	],
 	"globalStyle": {
