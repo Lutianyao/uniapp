@@ -60,7 +60,13 @@
 		{
 			"path": "pages/project/order/index",
 			"style": {
-				"navigationBarTitleText": "预约订单"
+				"navigationBarTitleText": "我的预约"
+			}
+		},
+		{
+			"path": "pages/project/order/info",
+			"style": {
+				"navigationBarTitleText": "预约详情"
 			}
 		}
 	],

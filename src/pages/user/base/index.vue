@@ -173,6 +173,11 @@ export default {
             this.$u.route({
                 url:'pages/user/address/index'
             })
+        },
+        onMyOrder(){
+            this.$u.route({
+                url:'pages/project/order/index'
+            })
         }
     }
 }

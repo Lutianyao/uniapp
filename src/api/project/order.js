@@ -1,6 +1,22 @@
 export default {
+    OrderIndex:{
+        url:'project/order/index',
+        method:"POST"
+    },
     OrderAdd:{
         url:'project/order/add',
+        method:"POST"
+    },
+    OrderPay:{
+        url:'project/order/pay',
+        method:"POST"
+    },
+    OrderInfo:{
+        url:'project/order/info',
+        method:"POST"
+    },
+    OrderRevoke:{
+        url:'project/order/revoke',
         method:"POST"
     }
 }
