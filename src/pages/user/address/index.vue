@@ -7,7 +7,6 @@
                     <view class="address-name">联系方式：{{item.mobile}}</view>
                 </view>
                 <view class="city">地址：{{item.region_text}} {{item.address}}</view>
-                <!-- <view class="address">详细地址：财智大厦</view> -->
                 <view class="btn-box">
                     <view class="left-btn">
                         <u-radio :customStyle="{marginBottom: '8px'}" label="设置默认地址" :name="item.id">

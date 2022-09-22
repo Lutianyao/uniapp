@@ -2,8 +2,7 @@
     <view class="container">
         <block>
             <!-- 有封面图 -->
-            <view class="userinfo" v-if="LoginUser.cover"
-                :style="{ background: 'url(' + LoginUser.cover + ')' }">
+            <view class="userinfo" v-if="LoginUser.cover" :style="{ background: 'url(' + LoginUser.cover + ')' }">
                 <!-- 在微信平台出现 -->
                 <!-- #ifdef MP-WEIXIN -->
                 <!-- 头像 -->
@@ -97,22 +96,27 @@
                     <text>我的收货地址</text>
                     <image src='/static/images/icons/row.png'></image>
                 </view>
-                <view class="profile-items" @click="onQuery">
-                    <text>维修进度</text>
-                    <image src='/static/images/icons/row.png'></image>
-                </view>
                 <view class="profile-items" @click="onRecord">
                     <text>消费记录</text>
                     <image src='/static/images/icons/row.png'></image>
                 </view>
                 <view class="profile-items" @click="calling">
-                    <!--<image src='/static/images/icons/call.png'></image>-->
                     <text>联系我们</text>
                     <image src='/static/images/icons/row.png'></image>
                 </view>
+                <view class="profile-items" @click="calling">
+                    <text>联系我们</text>
+                    <image src='/static/images/icons/row.png'></image>
+                </view>
+                <!-- <view class="profile-items" @click="logout" v-if="LoginUser">
+                    <text>退出登陆</text>
+                    <image src='/static/images/icons/row.png'></image>
+                </view> -->
             </view>
         </block>
         <u-toast ref="uToast"></u-toast>
+        <u-modal :show="showdel" showCancelButton :content='content' @confirm="confirm" ref="uModal"
+            @cancel="showdel = false"></u-modal>
     </view>
 </template>
 <script>
@@ -121,27 +125,31 @@ export default {
         let LoginUser = uni.getStorageSync('LoginUser')
 
         this.LoginUser = LoginUser
-
     },
     data() {
         return {
-            LoginUser: null
+            LoginUser: null,
+            showdel: false,
+            content: '是否确认退出登陆?'
         }
     },
     methods: {
         AuthLogin() {
             uni.login({
+                // 获取code
                 provider: 'weixin',
                 success: async (res) => {
+                    // 获取到的code进行赋值
                     let code = res.code
                     let result = await this.$u.api.user.login({ code: code })
+                    // 登录失败=>出错了/未绑定账号
                     if (result.code === 0) {
                         this.$refs.uToast.show({
                             type: 'default',
                             message: result.msg,
                             duration: 1400
                         })
-
+                        // 去绑定账号页
                         if (result.url) {
                             setTimeout(() => {
                                 this.$u.route({
@@ -150,35 +158,54 @@ export default {
                             }, 1500);
                         }
                         return false
-                    }else{
+                    } else {
                         this.$refs.uToast.show({
-                        type: 'default',
-                        message: result.msg,
-                        duration: 1400
-                    })
-                    uni.setStorageSync('LoginUser',result.data)
+                            type: 'default',
+                            message: result.msg,
+                            duration: 1400
+                        })
+                        uni.setStorageSync('LoginUser', result.data)
                         this.LoginUser = result.data
                         return false
-                    }  
+                    }
                 }
             })
         },
-        onProfile()
-        {
+        onProfile() {
             this.$u.route({
-                url:'pages/user/profile/profile'
+                url: 'pages/user/profile/profile'
             })
         },
-        onAddress(){
+        onAddress() {
             this.$u.route({
-                url:'pages/user/address/index'
+                url: 'pages/user/address/index'
             })
         },
-        onMyOrder(){
+        onMyOrder() {
             this.$u.route({
-                url:'pages/project/order/index'
+                url: 'pages/project/order/index'
             })
-        }
+        },
+        onRecord() {
+            this.$u.route({
+                url: 'pages/user/record/record'
+            })
+        },
+        calling() {
+            uni.makePhoneCall({
+                phoneNumber: '13232123456'
+            });
+        },
+        // logout() {
+        //     this.showdel = true
+        // },
+        // confirm() {
+        //     this.showdel = false
+        //     uni.removeStorageSync('LoginUser')
+        //     uni.switchTab({
+        //         url: '/pages/user/base/index',
+        //     })
+        // },
     }
 }
 </script>

@@ -40,6 +40,15 @@
         <u-modal :show="RevokeShow" title="确认撤销该预约" showCancelButton @confirm="RevokeConfirm"
             @cancel="RevokeShow = false">
         </u-modal>
+        <u-popup :show="show" mode="bottom" :round="10" safeAreaInsetTop="true" @close="close">
+            <view class="rate">
+                <u-rate size="30" :count="count" v-model="value"></u-rate>
+            </view>
+            <view class="content">
+                <text>您的五星好评，是我们无限的动力</text>
+            </view>
+            <u-button type="warning" text="确定" @click="rate"></u-button>
+        </u-popup>
 
         <!-- 消息提示的组件 -->
         <!-- <u-notify ref="uNotify"></u-notify> -->
@@ -92,7 +101,10 @@ export default {
             status: null,
             PayShow: false,
             RevokeShow: false,
-            orderid: 0
+            orderid: 0,
+            show: false,
+            count: 5,
+            value: 0
         }
     },
     methods: {
@@ -186,6 +198,55 @@ export default {
                 return false
             }
         },
+        // 取消撤销
+        async ToCancel(orderid) {
+            let result = await this.$u.api.project.ToCancel({ orderid: orderid })
+            if (result.code === 0) {
+                this.$refs.uNotify.show({
+                    type: 'error',
+                    message: result.msg,
+                    duration: 1500
+                })
+            } else {
+                this.$refs.uNotify.show({
+                    type: 'success',
+                    message: result.msg,
+                    duration: 1500
+                })
+                this.OrderData()
+                return false
+            }
+        },
+        // 评分
+        ToRate(orderid) {
+            this.orderid=orderid
+            this.show = true
+        },
+        close() {
+            this.show = false
+        },
+        async rate(){
+            let data={
+                orderid:this.orderid,
+                rate:this.value
+            }
+            let result = await this.$u.api.project.ToRate(data)
+            if (result.code === 0) {
+                this.$refs.uNotify.show({
+                    type: 'error',
+                    message: result.msg,
+                    duration: 1500
+                })
+            } else {
+                this.$refs.uNotify.show({
+                    type: 'success',
+                    message: result.msg,
+                    duration: 1500
+                })
+                this.OrderData()
+            }
+            this.show = false
+        }
     }
 }
 </script>
@@ -235,5 +296,14 @@ page {
 
 .u-tabs__wrapper__nav__item__text {
     white-space: nowrap;
+}
+
+.rate {
+    margin: auto;
+    /* padding: 30px; */
+}
+.content{
+    margin: auto;
+    padding: 20px;
 }
 </style>

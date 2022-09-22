@@ -1,7 +1,7 @@
 <template>
     <view>
         <view class="information">
-            <text class='subject'>{{info.project.name}}</text>
+            <text class='subject'>预约项目：{{info.project.name}}</text>
             <text class='createtime'>预约时间：{{info.createtime}}</text>
             <text class='content'>备注：{{info.content}}</text>
             <text class='price' v-if="info.status == 1 && info.price >= 0">价格：￥{{info.price}}</text>
