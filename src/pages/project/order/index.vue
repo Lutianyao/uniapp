@@ -18,15 +18,18 @@
                         确认支付</u-button>
 
                     <!-- 已支付、未服务 -->
-                    <u-button @click="ToRevoke(item.id)" v-if="item.status > 0 && !item.rate" class="item" type="error"
+                    <u-button @click="ToRevoke(item.id)" v-if="item.status > 0 && !item.rate" class="item" type="warning"
                         size="mini">撤销预约</u-button>
 
                     <u-button @click="ToCancel(item.id)" v-if="item.status == -2 && !item.rate" class="item"
-                        type="error" size="mini">取消撤销</u-button>
+                        type="warning" size="mini">取消撤销</u-button>
 
                     <!-- 已服务、未评价 -->
-                    <u-button @click="ToRate(item.id)" v-if="item.status == 3 && !item.rate" class="item" type="warning"
+                    <u-button @click="ToRate(item.id)" v-if="item.status == 3 && !item.rate" class="item" type="success"
                         size="mini">评分</u-button>
+                    <!-- 删除 -->
+                    <u-button @click="ToDel(item.id)" v-if="item.status == 3 || item.status == -1 || item.status == -3" 
+                    class="item" type="error" size="mini">删除</u-button>
                 </view>
             </view>
         </view>
@@ -39,6 +42,9 @@
         </u-modal>
         <u-modal :show="RevokeShow" title="确认撤销该预约" showCancelButton @confirm="RevokeConfirm"
             @cancel="RevokeShow = false">
+        </u-modal>
+        <u-modal :show="DelShow" title="确认删除该订单" showCancelButton @confirm="DelConfirm"
+            @cancel="DelShow = false">
         </u-modal>
         <u-popup :show="show" mode="bottom" :round="10" safeAreaInsetTop="true" @close="close">
             <view class="rate">
@@ -101,6 +107,7 @@ export default {
             status: null,
             PayShow: false,
             RevokeShow: false,
+            DelShow: false,
             orderid: 0,
             show: false,
             count: 5,
@@ -200,7 +207,7 @@ export default {
         },
         // 取消撤销
         async ToCancel(orderid) {
-            let result = await this.$u.api.project.ToCancel({ orderid: orderid })
+            let result = await this.$u.api.project.Cancel({ orderid: orderid })
             if (result.code === 0) {
                 this.$refs.uNotify.show({
                     type: 'error',
@@ -217,20 +224,22 @@ export default {
                 return false
             }
         },
-        // 评分
+        // 点击评分
         ToRate(orderid) {
             this.orderid=orderid
             this.show = true
         },
+        // 关闭评分展示
         close() {
             this.show = false
         },
+        // 评分
         async rate(){
             let data={
                 orderid:this.orderid,
                 rate:this.value
             }
-            let result = await this.$u.api.project.ToRate(data)
+            let result = await this.$u.api.project.Rate(data)
             if (result.code === 0) {
                 this.$refs.uNotify.show({
                     type: 'error',
@@ -246,6 +255,29 @@ export default {
                 this.OrderData()
             }
             this.show = false
+        },
+        // 删除
+        ToDel(orderid){
+            this.orderid = orderid
+            this.DelShow = true
+        },
+        async DelConfirm(){
+            let result = await this.$u.api.project.Del({ orderid: this.orderid })
+            if (result.code === 0) {
+                this.$refs.uNotify.show({
+                    type: 'error',
+                    message: result.msg,
+                    duration: 1500
+                })
+            } else {
+                this.$refs.uNotify.show({
+                    type: 'success',
+                    message: result.msg,
+                    duration: 1500
+                })
+                this.OrderData()
+                this.DelShow = false
+            }
         }
     }
 }

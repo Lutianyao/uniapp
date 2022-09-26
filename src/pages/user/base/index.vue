@@ -104,14 +104,10 @@
                     <text>联系我们</text>
                     <image src='/static/images/icons/row.png'></image>
                 </view>
-                <view class="profile-items" @click="calling">
-                    <text>联系我们</text>
-                    <image src='/static/images/icons/row.png'></image>
-                </view>
-                <!-- <view class="profile-items" @click="logout" v-if="LoginUser">
+                <view class="profile-items" @click="logout" v-if="LoginUser">
                     <text>退出登陆</text>
                     <image src='/static/images/icons/row.png'></image>
-                </view> -->
+                </view>
             </view>
         </block>
         <u-toast ref="uToast"></u-toast>
@@ -196,16 +192,14 @@ export default {
                 phoneNumber: '13232123456'
             });
         },
-        // logout() {
-        //     this.showdel = true
-        // },
-        // confirm() {
-        //     this.showdel = false
-        //     uni.removeStorageSync('LoginUser')
-        //     uni.switchTab({
-        //         url: '/pages/user/base/index',
-        //     })
-        // },
+        logout() {
+            this.showdel = true
+        },
+        confirm() {
+            this.showdel = false
+            uni.removeStorageSync('LoginUser')
+            this.LoginUser=null
+        },
     }
 }
 </script>

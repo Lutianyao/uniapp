@@ -19,12 +19,16 @@ export default {
         url:'project/order/revoke',
         method:"POST"
     },
-    ToCancel:{
+    Cancel:{
         url:'project/order/cancel',
         method:"POST"
     },
-    ToRate:{
+    Rate:{
         url:'project/order/rate',
+        method:"POST"
+    },
+    Del:{
+        url:'project/order/del',
         method:"POST"
     }
 }
