@@ -1,6 +1,6 @@
 export default {
     Home:{
-        url:'home/index',
+        url:'Home/index',
         method:'POST'
     }
 }
