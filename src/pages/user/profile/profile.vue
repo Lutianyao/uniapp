@@ -2,32 +2,45 @@
     <view class="container">
         <!-- 封面图片 -->
         <view class="cover" v-if="LoginUser.cover" :style="{ background: 'url(' + LoginUser.cover + ')' }">
-            <view class="avatar">
+            <!-- <view class="avatar"> -->
                 <!-- #ifdef MP-WEIXIN -->
-                <open-data type="userAvatarUrl"></open-data>
+                <!-- <open-data type="userAvatarUrl"></open-data> -->
                 <!-- #endif-->
                 <!-- #ifdef H5 || APP-PLUS -->
-                <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image>
+                <!-- <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image> -->
                 <!-- #endif -->
-            </view>
+            <!-- </view> -->
+            <button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
+                <image class="avatar" :src="LoginUser.wxAvatar_cdn"></image>
+            </button> 
         </view>
         <!-- 没有封面图 -->
         <view class="cover" v-else>
             <view class="avatar">
                 <!-- #ifdef MP-WEIXIN -->
-                <open-data type="userAvatarUrl"></open-data>
+                <!-- <open-data type="userAvatarUrl"></open-data> -->
                 <!-- #endif-->
                 <!-- #ifdef H5 || APP-PLUS -->
-                <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image>
+                <!-- <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image> -->
+                <button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
+                    <image class="avatar" :src="LoginUser.wxAvatar_cdn"></image>
+                </button> 
                 <!-- #endif -->
             </view>
         </view>
         <view class="profile">
             <u--form :model="LoginUser" labelPosition="left" ref="profile" :errorType="errorType">
+                <!-- #ifdef MP-WEIXIN -->
+                <u-form-item label="昵称" prop="nickname">
+                    <u--input v-model="LoginUser.wxNickname" type="nickname" class="weui-input" placeholder="请输入昵称"/>
+                </u-form-item>
+                <!-- #endif -->
+                <!-- #ifdef H5 || APP-PLUS -->
                 <!-- 昵称 -->
                 <u-form-item label="昵称" prop="nickname">
                     <u--input v-model="LoginUser.nickname" placeholder="请输入昵称"></u--input>
                 </u-form-item>
+                <!-- #endif -->
                 <!-- 邮箱 -->
                 <u-form-item label="邮箱" prop="email">
                     <u--input v-model="LoginUser.email" disabled placeholder="请输入邮箱"></u--input>
@@ -245,6 +258,12 @@ export default {
             }).catch(error => {
 
             })
+        },
+        onChooseAvatar(value)
+        {
+            const {avatarUrl} = value.detail 
+
+            this.LoginUser.wxAvatar_cdn = avatarUrl
         }
     }
 }
@@ -263,13 +282,18 @@ export default {
     color: #fff;
 }
 
+.avatar-wrapper {
+  padding: 0;
+  width: 56px !important;
+  border-radius: 8px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
 .avatar {
-    width: 12vh;
-    height: 12vh;
-    margin: 0 auto;
-    border-radius: 100px;
-    overflow: hidden;
-    margin-bottom: 3vh;
+  display: block;
+  width: 56px;
+  height: 56px;
 }
 
 .profile {
