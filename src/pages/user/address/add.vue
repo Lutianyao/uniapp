@@ -46,6 +46,7 @@ export default {
         pickRegions
     },
     onShow() {
+        this.$u.auth.check()
         // 获取cookie
         let LoginUser = uni.getStorageSync('LoginUser')
         // 给表单的属性赋值

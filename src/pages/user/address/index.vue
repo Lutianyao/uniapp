@@ -42,6 +42,7 @@
 <script>
 export default {
     onShow() {
+        this.$u.auth.check()
         let LoginUser = uni.getStorageSync('LoginUser');
         this.LoginUser = LoginUser;
         this.AddressData()

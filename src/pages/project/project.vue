@@ -107,6 +107,7 @@ export default {
         }
     },
     onReady() {
+        this.$u.auth.check()
         this.LoginUser = uni.getStorageSync('LoginUser')
         this.$refs.add.setRules(this.rules)
         this.Home()

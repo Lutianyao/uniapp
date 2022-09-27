@@ -64,6 +64,7 @@
 <script>
 export default {
     onShow() {
+        this.$u.auth.check()
         this.LoginUser = uni.getStorageSync('LoginUser')
         this.OrderData()
     },

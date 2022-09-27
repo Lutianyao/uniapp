@@ -15,12 +15,7 @@
 export default {
 	data() {
 		return {
-			list: [
-				'/static/images/order-images/show-1.jpg',
-				'/static/images/order-images/show-2.jpg',
-				'/static/images/order-images/show-3.jpg',
-			]
-
+			list: []
 		}
 	},
 	onShow() {

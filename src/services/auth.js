@@ -14,6 +14,7 @@ const install = (vue, vm) => {
                     url: '/pages/user/base/index'
                 })
             }, 1000);
+            return false
         }
         // 将userid传到后台检查账号密码信息是否正确
         let userid = LoginUser.id ? LoginUser.id : 0

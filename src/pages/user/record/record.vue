@@ -12,6 +12,7 @@
 <script>
 export default {
     onShow() {
+        this.$u.auth.check()
         this.RecordList()
     },
     data() {

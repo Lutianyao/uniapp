@@ -51,6 +51,7 @@ export default {
         this.Address()
     },
     onShow() {
+        this.$u.auth.check()
         // 获取cookie
         let LoginUser = uni.getStorageSync('LoginUser')
         // 将cookie数据赋值给LoginUser
