@@ -3,16 +3,16 @@
         <!-- 封面图片 -->
         <view class="cover" v-if="LoginUser.cover" :style="{ background: 'url(' + LoginUser.cover + ')' }">
             <!-- <view class="avatar"> -->
-                <!-- #ifdef MP-WEIXIN -->
-                <!-- <open-data type="userAvatarUrl"></open-data> -->
-                <!-- #endif-->
-                <!-- #ifdef H5 || APP-PLUS -->
-                <!-- <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image> -->
-                <!-- #endif -->
+            <!-- #ifdef MP-WEIXIN -->
+            <!-- <open-data type="userAvatarUrl"></open-data> -->
+            <!-- #endif-->
+            <!-- #ifdef H5 || APP-PLUS -->
+            <!-- <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image> -->
+            <!-- #endif -->
             <!-- </view> -->
             <button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
                 <image class="avatar" :src="LoginUser.wxAvatar_cdn"></image>
-            </button> 
+            </button>
         </view>
         <!-- 没有封面图 -->
         <view class="cover" v-else>
@@ -24,7 +24,7 @@
                 <!-- <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image> -->
                 <button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
                     <image class="avatar" :src="LoginUser.wxAvatar_cdn"></image>
-                </button> 
+                </button>
                 <!-- #endif -->
             </view>
         </view>
@@ -32,7 +32,7 @@
             <u--form :model="LoginUser" labelPosition="left" ref="profile" :errorType="errorType">
                 <!-- #ifdef MP-WEIXIN -->
                 <u-form-item label="昵称" prop="nickname">
-                    <u--input v-model="LoginUser.wxNickname" type="nickname" class="weui-input" placeholder="请输入昵称"/>
+                    <u--input v-model="LoginUser.wxNickname" type="nickname" class="weui-input" placeholder="请输入昵称" />
                 </u-form-item>
                 <!-- #endif -->
                 <!-- #ifdef H5 || APP-PLUS -->
@@ -82,7 +82,8 @@
         </view>
 
         <!-- 性别的选择器 -->
-        <u-picker :show="SexShow" :columns="SexList" :defaultIndex=defaultIndex keyName="label" @confirm="SexChange" @cancel="SexShow = false">
+        <u-picker :show="SexShow" :columns="SexList" :defaultIndex=defaultIndex keyName="label" @confirm="SexChange"
+            @cancel="SexShow = false">
         </u-picker>
         <!-- 消息提示的组件 -->
         <u-toast ref="notice"></u-toast>
@@ -128,7 +129,7 @@ export default {
             cover: [],
             RegionShow: false,
             RegionCode: null,
-            defaultIndex:[1],
+            defaultIndex: [1],
             //表单验证规则
             rules: {
                 email: [
@@ -259,11 +260,26 @@ export default {
 
             })
         },
-        onChooseAvatar(value)
-        {
-            const {avatarUrl} = value.detail 
-
-            this.LoginUser.wxAvatar_cdn = avatarUrl
+        async onChooseAvatar(value) {
+            const { avatarUrl } = value.detail
+            let data = {
+                filePath: avatarUrl,
+                name: 'avatar',
+                formData: {
+                    userid: this.LoginUser.id
+                }
+            }
+            let result = await this.$u.api.user.wxAvatar(data)
+            if (result.code === 1) {
+                    uni.setStorageSync('LoginUser', result.data)
+                    this.LoginUser.wxAvatar_cdn = avatarUrl
+                } else {
+                    this.$refs.notice.show({
+                        type: 'default',
+                        message: result.msg,
+                        duration: 1400
+                    })
+                }
         }
     }
 }
@@ -283,17 +299,17 @@ export default {
 }
 
 .avatar-wrapper {
-  padding: 0;
-  width: 56px !important;
-  border-radius: 8px;
-  margin-top: 40px;
-  margin-bottom: 40px;
+    padding: 0;
+    width: 56px !important;
+    border-radius: 8px;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .avatar {
-  display: block;
-  width: 56px;
-  height: 56px;
+    display: block;
+    width: 56px;
+    height: 56px;
 }
 
 .profile {
