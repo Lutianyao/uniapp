@@ -2,31 +2,30 @@
     <view class="container">
         <!-- 封面图片 -->
         <view class="cover" v-if="LoginUser.cover" :style="{ background: 'url(' + LoginUser.cover + ')' }">
-            <!-- <view class="avatar"> -->
             <!-- #ifdef MP-WEIXIN -->
-            <!-- <open-data type="userAvatarUrl"></open-data> -->
+            <button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
+                <image class="WxAvatar" :src="LoginUser.wxAvatar_cdn"></image>
+            </button>
             <!-- #endif-->
             <!-- #ifdef H5 || APP-PLUS -->
-            <!-- <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image> -->
+            <view class="avatar">
+                <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image>
+            </view>
             <!-- #endif -->
-            <!-- </view> -->
-            <button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
-                <image class="avatar" :src="LoginUser.wxAvatar_cdn"></image>
-            </button>
+            
         </view>
         <!-- 没有封面图 -->
         <view class="cover" v-else>
-            <view class="avatar">
                 <!-- #ifdef MP-WEIXIN -->
-                <!-- <open-data type="userAvatarUrl"></open-data> -->
+                <button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
+                    <image class="WxAvatar" :src="LoginUser.wxAvatar_cdn"></image>
+                </button>
                 <!-- #endif-->
                 <!-- #ifdef H5 || APP-PLUS -->
-                <!-- <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image> -->
-                <button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
-                    <image class="avatar" :src="LoginUser.wxAvatar_cdn"></image>
-                </button>
+                <view class="avatar">
+                    <u-image width="100%" height="200px" src="/static/images/cover.jpg"></u-image>
+                </view>
                 <!-- #endif -->
-            </view>
         </view>
         <view class="profile">
             <u--form :model="LoginUser" labelPosition="left" ref="profile" :errorType="errorType">
@@ -306,12 +305,19 @@ export default {
     margin-bottom: 40px;
 }
 
-.avatar {
+.WxAvatar {
     display: block;
     width: 56px;
     height: 56px;
 }
-
+.avatar{
+    width: 12vh;
+    height: 12vh;
+    margin: 0 auto;
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 3vh;
+}
 .profile {
     margin-top: 3vh;
     background: #fff;

@@ -7,7 +7,8 @@
                 <!-- #ifdef MP-WEIXIN -->
                 <!-- 头像 -->
                 <view class="userinfo-avatar">
-                    <open-data type="userAvatarUrl"></open-data>
+                    <u-image v-if="LoginUser" :src="LoginUser.wxAvatar_cdn"></u-image>
+                    <u-image v-else src="/static/images/0.png"></u-image>
                 </view>
 
                 <!-- 昵称 -->
@@ -26,7 +27,7 @@
                 <!-- 在H5 || app => 应用软件 -->
                 <!-- #ifdef H5 || APP-PLUS -->
                 <view class="avatar">
-                    <u-image width="100%" height="200px" src="/static/images/logo.png"></u-image>
+                    <u-image width="100%" height="200px" src="/static/images/0.png"></u-image>
                 </view>
 
                 <view class="nickname-carid">
@@ -48,7 +49,8 @@
                 <!-- #ifdef MP-WEIXIN -->
                 <!-- 头像 -->
                 <view class="userinfo-avatar">
-                    <open-data type="userAvatarUrl"></open-data>
+                    <u-image v-if="LoginUser" :src="LoginUser.wxAvatar_cdn"></u-image>
+                    <u-image v-else src="/static/images/0.png"></u-image>
                 </view>
 
                 <!-- 昵称 -->
@@ -67,7 +69,7 @@
 
                 <!-- #ifdef H5 || APP-PLUS -->
                 <view class="avatar">
-                    <u-image width="100%" height="200px" src="/static/images/logo.png">
+                    <u-image width="100%" height="200px" src="/static/images/0.png">
                     </u-image>
                 </view>
 
@@ -119,7 +121,6 @@
 export default {
     onShow() {
         let LoginUser = uni.getStorageSync('LoginUser')
-
         this.LoginUser = LoginUser
     },
     data() {
@@ -237,7 +238,7 @@ page {
     color: white;
 }
 
-.userinfo-avatar {
+.userinfo-avatar, .userinfo-avatar u-image{
     width: 200rpx;
     height: 200rpx;
     border-radius: 50%;
@@ -250,7 +251,6 @@ page {
 }
 
 .userinfo-carid {
-    padding-bottom: 5rpx;
     font-size: 26rpx;
 }
 
@@ -284,7 +284,6 @@ page {
     height: 36rpx;
     width: 36rpx;
 }
-
 
 .auth {
     width: 300rpx;
